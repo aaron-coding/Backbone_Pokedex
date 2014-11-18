@@ -11,9 +11,7 @@ Pokedex.RootView.prototype.renderPokemonDetail = function (pokemon) {
           tag.append(key, ": ", pokemon.get(key), "<br>");
         }
     }
-    // pokemon.keys.forEach(function() {
-    //     
-    // })
+
     this.$pokeDetail.html(tag);
 };
 
@@ -23,10 +21,5 @@ Pokedex.RootView.prototype.selectPokemonFromList = function (event) {
     this.renderPokemonDetail(this.pokes.get(pokeId))
     
 
-    // var currentPokemon = new Pokedex.Models.Pokemon({ id: pokeId })
-    // currentPokemon.fetch({
-//         success: function() {
-//             this.renderPokemonDetail(currentPokemon);
-//         }.bind(this)
-//     });
+
 };
