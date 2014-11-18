@@ -1,18 +1,23 @@
 Pokedex.RootView.prototype.addPokemonToList = function (pokemon) {
-    // debugger
-    var stringToAdd = $("<li>")
-        .text(pokemon.get("name"), pokemon.get("poke_type"))
-        .addClass("poke-list-item")
-        .attr("data-id", pokemon.get("id"))
-    this.$pokeList.append(stringToAdd);    
+  var $li = $('<li class="poke-list-item">');
+  $li.data('id', pokemon.get('id'));
+
+  var shortInfo = ['name', 'poke_type'];
+  shortInfo.forEach(function (attr) {
+    $li.append(attr + ': ' + pokemon.get(attr) + '<br>');
+  });
+
+  this.$pokeList.append($li);
 };
 
 Pokedex.RootView.prototype.refreshPokemon = function (callback) {
-    this.pokes.fetch({
-        success: function() {
-            this.pokes.each(this.addPokemonToList.bind(this));
-        }.bind(this)
-    });
+  this.pokes.fetch({
+    success: (function () {
+      this.$pokeList.empty();
+      this.pokes.each(this.addPokemonToList.bind(this));
+      callback && callback();
+    }).bind(this)
+  });
 
+  return this.pokes;
 };
-

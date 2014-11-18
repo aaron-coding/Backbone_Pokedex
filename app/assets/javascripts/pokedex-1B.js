@@ -1,25 +1,41 @@
 Pokedex.RootView.prototype.renderPokemonDetail = function (pokemon) {
-    var tag = $("<div class='details'>");
-    var pokeKeys = pokemon.keys();
-    for (var i = 0; i < pokeKeys.length; i++) {
-        var key = pokeKeys[i];
-        if (key === "image_url") {
-          tag.prepend("<img src=" + pokemon.get(key) +"><br>")
-        } else if (pokemon.get(key) instanceof Array ){
-          tag.append(key, ": ", pokemon.get(key).join(", "), "<br>");
-        } else {
-          tag.append(key, ": ", pokemon.get(key), "<br>");
-        }
+  var $detail = $('<div class="detail">');
+  // Show the image
+  $detail.append('<img src="' + pokemon.get('image_url') + '"><br>');
+  // Show the attributes
+  for (var attr in pokemon.attributes) {
+    if (pokemon.get(attr) && attr !== 'id' && attr !== 'image_url') {
+      $detail.append(
+        '<span style="font-weight:bold;">' + attr + ':</span> ' +
+          pokemon.get(attr) + '<br>'
+      );
     }
+  }
+  this.$pokeDetail.html($detail);
 
-    this.$pokeDetail.html(tag);
+  // Phase 2C.
+  this.$pokeDetail.append(
+    '<span style="font-weight: bold;">Toys:</span><br>'
+  );
+  var $toys = $('<ul class="toys"></ul>');
+  this.$pokeDetail.append($toys);
+
+  pokemon.fetch({
+    success: (function() {
+      this.renderToysList(pokemon.toys());
+    }).bind(this)
+  });
 };
 
 Pokedex.RootView.prototype.selectPokemonFromList = function (event) {
-    event.preventDefault();
-    var pokeId = $(event.currentTarget).data("id");
-    this.renderPokemonDetail(this.pokes.get(pokeId))
-    
+  // Phase II
+  this.$toyDetail.empty();
 
+  // Phase IB
+  var $target = $(event.target);
 
+  var pokeId = $target.data('id');
+  var pokemon = this.pokes.get(pokeId);
+
+  this.renderPokemonDetail(pokemon);
 };

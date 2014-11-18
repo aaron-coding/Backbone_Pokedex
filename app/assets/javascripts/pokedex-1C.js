@@ -1,25 +1,20 @@
 Pokedex.RootView.prototype.createPokemon = function (attrs, callback) {
-    var newPoke = new Pokedex.Models.Pokemon(attrs);
-    newPoke.save({}, {
-        success: function() {
-            this.pokes.add(newPoke);
-            this.addPokemonToList(newPoke);
-            callback(newPoke);
-        }.bind(this) 
-    });
+  var pokemon = new Pokedex.Models.Pokemon(attrs);
+
+  pokemon.save(attrs, {
+    success: (function() {
+      this.pokes.add(pokemon);
+      this.addPokemonToList(pokemon);
+      callback && callback.call(this, pokemon);
+    }).bind(this)
+  });
+
+  return pokemon;
 };
 
 Pokedex.RootView.prototype.submitPokemonForm = function (event) {
-    event.preventDefault();
-    var newPoke = $(event.currentTarget).serializeJSON();
-    this.createPokemon(newPoke, this.renderPokemonDetail.bind(this));
-    //, 
+  event.preventDefault();
+  var pokeAttrs = ($(event.target).serializeJSON())['pokemon'];
+
+  this.createPokemon(pokeAttrs, this.renderPokemonDetail.bind(this));
 };
-
-
-    // var currentPokemon = new Pokedex.Models.Pokemon({ id: pokeId })
-    // currentPokemon.fetch({
-//         success: function() {
-//             this.renderPokemonDetail(currentPokemon);
-//         }.bind(this)
-//     });
