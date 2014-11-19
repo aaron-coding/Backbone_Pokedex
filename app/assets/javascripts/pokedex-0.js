@@ -1,6 +1,7 @@
 window.Pokedex = (window.Pokedex || {});
 window.Pokedex.Models = {};
 window.Pokedex.Collections = {};
+window.Pokedex.Views = {};
 
 Pokedex.Models.Pokemon = Backbone.Model.extend({
   urlRoot: '/pokemon',
@@ -112,8 +113,11 @@ window.Pokedex.RootView = function ($el) {
   );
 };
 
-$(function() {
-  var $rootEl = $('#pokedex');
-  window.Pokedex.rootView = new Pokedex.RootView($rootEl);
-  window.Pokedex.rootView.refreshPokemon();
-});
+
+
+//
+// $(function() {
+//   var $rootEl = $('#pokedex');
+//   window.Pokedex.rootView = new Pokedex.RootView($rootEl);
+//   window.Pokedex.rootView.refreshPokemon();
+// });

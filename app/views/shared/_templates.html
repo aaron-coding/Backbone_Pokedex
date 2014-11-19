@@ -1,13 +1,16 @@
 <script type="text/template" id="pokemon-list-item-template">
-  <%%= "<li class='poke-list-item' data-id='" + pokemon.get('id') + "'>" %>
+  <li class='poke-list-item' data-id='<%%= pokemon.get('id') %>'>
   <%% var shortInfo = ['name', 'poke_type']; %>
     <%% shortInfo.forEach(function (attr) { %>
-    <%%= attr + ': ' + pokemon.get(attr) + '<br>' %>
-  <%% }); %>
-  
-  
-  
+      <%%= attr + ': ' + pokemon.get(attr) + '<br>' %>
+    <%% }); %>
 </script>
+
+
+
+
+
+
 
 <script type="text/template" id="pokemon-detail-template">
   <div class="detail">
@@ -21,6 +24,11 @@
   
   <ul class="toys"></ul>
 </script>
+
+
+
+
+
 
 <script type="text/template" id="toy-list-item-template">
   
